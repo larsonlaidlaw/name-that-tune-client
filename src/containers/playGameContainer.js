@@ -1,20 +1,15 @@
 import React, { Component } from 'react'
-import YouTube from 'react-youtube';
+import YouTube from 'react-youtube'
 import { Icon } from 'semantic-ui-react'
 
 
 class PlayGameContainer extends Component {
-
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      videoIds: [],
-      videoChannels: [],
-      videoTitles: [],
-      player: null,
-      i: 0
-    };
+  state = {
+    videoIds: [],
+    videoChannels: [],
+    videoTitles: [],
+    player: null,
+    i: 0
   }
 
   componentDidMount(){
@@ -36,19 +31,17 @@ class PlayGameContainer extends Component {
   }
 
   onReady = (event) => {
-    console.log(`YouTube Player object for videoId: "${this.state.videoTitles[this.state.i]}" has been saved to state.`);
-    this.setState({
-      player: event.target,
-    });
+    console.log(`YouTube Player object for videoId: "${this.state.videoTitles[this.state.i]}" has been saved to state.`)
+    this.setState({ player: event.target, })
   }
 
   onPlayVideo = () => {
-    this.state.player.playVideo();
+    this.state.player.playVideo()
     console.log('trying to play', this.state.videoTitles[this.state.i])
   }
 
   onPauseVideo = () => {
-    this.state.player.pauseVideo();
+    this.state.player.pauseVideo()
   }
 
   onNextVideo = () => {
