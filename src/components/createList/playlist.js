@@ -1,7 +1,10 @@
 import React, {Component} from 'react'
-import { List, Button } from 'semantic-ui-react'
+import { List, Button, Modal, Image, Header, Input } from 'semantic-ui-react'
 
 class Playlist extends Component {
+  state = {
+    listTitle: ''
+  }
   savePlaylist = () => {
    let savedPlaylist = []
    this.props.videoList.map((video)=>{
@@ -15,7 +18,7 @@ class Playlist extends Component {
    this.postPlaylist(savedPlaylist)
  }
 
-   postPlaylist = (array) => {
+   postPlaylist = (array, title) => {
      fetch("http://localhost:3000/api/v1/videos",
        {
          headers: {
@@ -26,17 +29,38 @@ class Playlist extends Component {
          body: JSON.stringify({'videos': array})
        })
    }
+
+   doSomething = () => {
+     console.log('do something')
+   }
+
+   listTitleHandler = (event) => {
+     this.setState({
+      listTitle: event.target.value
+     })
+   }
+
   render(){
     let videos = this.props.videoList.map((video)=>{
-      return <List.Item>{video.snippet.title}</List.Item>
+      return <List.Item onClick={()=>this.props.changeVideoId(video.id.videoId)}>{video.snippet.title}</List.Item>
     })
     return(
       <div>
-        {this.props.videoList.length > 0 ? <h1>Song List</h1> : ""}
-        <List>
+        {this.props.videoList.length > 0 ? <h3>Song List</h3> : ""}
+        <List celled ordered>
           {videos}
         </List>
-        {this.props.videoList.length > 9 ? <Button onClick={this.savePlaylist}>Save Playlist</Button> : ""}
+        {this.props.videoList.length > 1 ?
+          <Modal
+            trigger={<Button>Save Playlist</Button>}
+            // header='Name your playlist'
+            content={<Input label="Name your playlist:" type="text" transparent='true' fluid='true' onChange={this.listTitleHandler}/>}
+            actions={[
+              { key: 'Cancel', content: 'Cancel', color: 'red', triggerClose: true },
+              { key: 'Save', content: 'Save', triggerClose: true, onClick: this.savePlaylist },
+            ]}
+          /> :
+        ""}
       </div>
     )
   }

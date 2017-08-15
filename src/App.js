@@ -7,6 +7,7 @@ import Auth from './components/auth/authorize'
 import AuthAdapter from './components/auth/authAdapter'
 import Login from './components/nav/login'
 import Signup from './components/nav/signup'
+import Profile from './components/profile/profile'
 
 
 //Styles
@@ -52,10 +53,9 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-
         <Router>
           <div>
-            <Route path='/' render={()=> <NavBar onLogout={this.handleLogout} state={this.state}/> } />
+            <Route path='/' render={()=> <NavBar onLogout={this.handleLogout} state={this.state} /> } />
             <Route path='/signup' component={Signup } />
             <Route path='/newplaylist' component={Auth(CreateListContainer)}></Route>
             <Route path='/play/:id' component={PlayGameContainer}></Route>
@@ -63,6 +63,7 @@ class App extends Component {
               <Redirect to="/newplaylist"/> :
               <Login onSendLogin={this.onLogin}/> }
             />
+            <Route path='/profile' component={Profile}/>
           </div>
         </Router>
       </div>

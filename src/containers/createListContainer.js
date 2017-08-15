@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import YouTube from 'react-youtube';
-import { Grid, Container, Divider  } from 'semantic-ui-react'
+import { Grid, Container, Divider, Image, Segment  } from 'semantic-ui-react'
 
 //other files
 import Search from '../components/createList/search'
@@ -60,30 +60,43 @@ class CreateListContainer extends Component {
     })
   }
 
+  changeVideoId = (videoId) => {
+    this.setState({
+      videoId: videoId
+    })
+  }
+
 
   render(){
     this.state.videoObject.snippet && console.log(this.state.videoObject.snippet.title)
     return(
       <div>
-        <Container text>
-          <YouTube videoId={this.state.videoId}/>
-          <Search
-            handleSearchChange={this.handleSearchChange}
-            handleSearchSubmit={this.handleSearchSubmit}
-            addVideoToPlaylist={this.addVideoToPlaylist}
-          />
+        <Container >
+
         </Container>
         <Divider />
-        <Grid columns={2} >
-          <Grid.Row>
-            <Grid.Column textAlign="left">
+
+        <Grid centered>
+          <Grid.Row centered>
+            <Grid.Column width={8} style={{ minWidth: 680 }}  >
+                <YouTube videoId={this.state.videoId}/>
+                <Search
+                  handleSearchChange={this.handleSearchChange}
+                  handleSearchSubmit={this.handleSearchSubmit}
+                  addVideoToPlaylist={this.addVideoToPlaylist}
+                />
+            </Grid.Column>
+            <Grid.Column width={3} >
+                <Playlist videoList={this.state.videoList} videoObject={this.state.videoObject} changeVideoId={this.changeVideoId}/>
+            </Grid.Column>
+          </Grid.Row>
+
+          <Grid.Row centered columns={1}>
+            <Grid.Column width={11} >
               <SearchResults
                 searchResults={this.state.results}
                 handleVideoSelection={this.handleVideoSelection}
               />
-            </Grid.Column>
-            <Grid.Column textAlign="left">
-              <Playlist videoList={this.state.videoList} videoObject={this.state.videoObject}/>
             </Grid.Column>
           </Grid.Row>
         </Grid>
