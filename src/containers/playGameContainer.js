@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import YouTube from 'react-youtube'
 import { Icon } from 'semantic-ui-react'
+import Player from '../components/player/player'
 
 
 class PlayGameContainer extends Component {

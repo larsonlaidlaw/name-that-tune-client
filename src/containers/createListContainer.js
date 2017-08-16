@@ -79,11 +79,6 @@ class CreateListContainer extends Component {
     this.state.videoObject.snippet && console.log(this.state.videoObject.snippet.title)
     return(
       <div>
-        <Container >
-
-        </Container>
-        <Divider />
-
         <Grid centered>
           <Grid.Row centered>
             <Grid.Column width={8} style={{ minWidth: 680 }}  >
