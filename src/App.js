@@ -8,6 +8,8 @@ import AuthAdapter from './components/auth/authAdapter'
 import Login from './components/nav/login'
 import Signup from './components/nav/signup'
 import Profile from './components/profile/profile'
+import UserList from './components/profile/userLists'
+import BrowseLists from './components/profile/browseLists'
 
 
 //Styles
@@ -30,6 +32,7 @@ class App extends Component {
       } else {
         console.log("auth adapter", res)
         localStorage.setItem('jwt', res.jwt)
+          localStorage.setItem('id', res.id)
         this.setState({
           auth:{
             isLoggedIn: true,
@@ -63,7 +66,9 @@ class App extends Component {
               <Redirect to="/newplaylist"/> :
               <Login onSendLogin={this.onLogin}/> }
             />
-            <Route path='/profile' component={Profile}/>
+            <Route exact path='/profile' component={Profile}/>
+            <Route path='/profile/lists' component={UserList}/>
+            <Route path='/lists' component={BrowseLists}/>
           </div>
         </Router>
       </div>

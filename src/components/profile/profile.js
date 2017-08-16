@@ -13,7 +13,7 @@ const Profile = () => (
       <Image src='https://react.semantic-ui.com/assets/images/wireframe/square-image.png' size='small' shape='circular' centered/>
       <Segment.Group >
         <Segment textAlign='left'>
-          <p><strong>Created Playlists</strong></p>
+          <p><strong><Link to='/profile/lists'>Created Playlists</Link></strong></p>
           <p>Check out the lists you've already made.</p>
         </Segment>
         <Segment textAlign='left'>

@@ -5,6 +5,7 @@ class Playlist extends Component {
   state = {
     listTitle: ''
   }
+
   savePlaylist = () => {
    let savedPlaylist = []
    this.props.videoList.map((video)=>{
@@ -14,8 +15,9 @@ class Playlist extends Component {
        video_channel: video.snippet.channelTitle
      })
    })
-   console.log(savedPlaylist)
-   this.postPlaylist(savedPlaylist)
+   let list = { title : this.state.listTitle, videos : savedPlaylist, user_id: localStorage.getItem('id')}
+   this.postPlaylist(list)
+   this.props.resetVideoList()
  }
 
    postPlaylist = (array, title) => {
@@ -26,7 +28,7 @@ class Playlist extends Component {
            'Content-Type': 'application/json'
          },
          method: 'POST',
-         body: JSON.stringify({'videos': array})
+         body: JSON.stringify({'payload': array})
        })
    }
 
@@ -54,7 +56,7 @@ class Playlist extends Component {
           <Modal
             trigger={<Button>Save Playlist</Button>}
             // header='Name your playlist'
-            content={<Input label="Name your playlist:" type="text" transparent='true' fluid='true' onChange={this.listTitleHandler}/>}
+            content={<Input label="Name your playlist:" type="text" transparent={true} fluid={true} onChange={this.listTitleHandler}/>}
             actions={[
               { key: 'Cancel', content: 'Cancel', color: 'red', triggerClose: true },
               { key: 'Save', content: 'Save', triggerClose: true, onClick: this.savePlaylist },

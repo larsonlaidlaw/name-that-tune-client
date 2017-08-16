@@ -11,7 +11,7 @@ const googleApiKey = 'AIzaSyAK0A249rjWnFiTZqSCZRwwVc5PvOpE8oE'
 
 class CreateListContainer extends Component {
   state = {
-    videoId: 'tvTRZJ-4EyI',
+    videoId: 'z9DJn5EMtZQ',
     results: [],
     searchTerm: '',
     videoObject: {},
@@ -66,6 +66,14 @@ class CreateListContainer extends Component {
     })
   }
 
+  resetVideoList = () => {
+    this.setState({
+      videoList: [],
+      searchTerm: '',
+      results: []
+    })
+  }
+
 
   render(){
     this.state.videoObject.snippet && console.log(this.state.videoObject.snippet.title)
@@ -84,10 +92,11 @@ class CreateListContainer extends Component {
                   handleSearchChange={this.handleSearchChange}
                   handleSearchSubmit={this.handleSearchSubmit}
                   addVideoToPlaylist={this.addVideoToPlaylist}
+                  searchTerm={this.state.searchTerm}
                 />
             </Grid.Column>
             <Grid.Column width={3} >
-                <Playlist videoList={this.state.videoList} videoObject={this.state.videoObject} changeVideoId={this.changeVideoId}/>
+                <Playlist videoList={this.state.videoList} videoObject={this.state.videoObject} changeVideoId={this.changeVideoId} resetVideoList={this.resetVideoList}/>
             </Grid.Column>
           </Grid.Row>
 

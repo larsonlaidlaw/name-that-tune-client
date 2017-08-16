@@ -15,6 +15,7 @@ class YTSearch extends Component {
             onChange={this.props.handleSearchChange}
             icon='search'
             placeholder='Search...'
+            value={this.props.searchTerm}
           />
         </form>
       </div>

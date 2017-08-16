@@ -32,7 +32,7 @@ class PlayGameContainer extends Component {
 
   onReady = (event) => {
     console.log(`YouTube Player object for videoId: "${this.state.videoTitles[this.state.i]}" has been saved to state.`)
-    this.setState({ player: event.target, })
+    this.setState({ player: event.target })
   }
 
   onPlayVideo = () => {
@@ -48,7 +48,18 @@ class PlayGameContainer extends Component {
     this.setState({
       i: this.state.i + 1
     })
-    this.onPlayVideo()
+  }
+
+
+  onStateChange = (event) => {
+    console.log('calling from onstate change', event)
+    if (event.data === 5 && this.state.i !== 0) {
+      this.onPlayVideo()
+    }
+  }
+
+  onEnd = () => {
+    this.onNextVideo()
   }
 
   render(){
@@ -58,6 +69,8 @@ class PlayGameContainer extends Component {
         <YouTube
           videoId={this.state.videoIds[this.state.i]}
           onReady={this.onReady.bind(this)}
+          onStateChange={this.onStateChange}
+          onEnd={this.onEnd}
         />
         <Icon link name="play" size='large' onClick={this.onPlayVideo}/>
         <Icon link name="pause" size='large' onClick={this.onPauseVideo} />
