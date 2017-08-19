@@ -17,11 +17,6 @@ class Signup extends React.Component{
     })
   }
 
-  handleSignup = (event) => {
-    event.preventDefault()
-    AuthAdapter.signUp(this.state)
-    .then(json => window.localStorage.setItem('jwt', json.jwt))
-  }
   render(){
     return (
 
@@ -35,14 +30,14 @@ class Signup extends React.Component{
       verticalAlign='middle'
     >
       <Grid.Column style={{ maxWidth: 450 }}>
-        <Header as='h2'  textAlign='center'>
+        <Header textAlign='center'>
           Create an account
         </Header>
-        <Form size='large' onSubmit={this.handleSignup}>
+        <Form size='large' onSubmit={(event)=> this.props.handleSignup(event, this.state)}>
           <Segment>
             <Form.Input
               fluid
-              icon='mail square'
+              icon='at'
               iconPosition='left'
               placeholder='E-mail address'
               name="email"

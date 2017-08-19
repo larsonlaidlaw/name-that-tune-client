@@ -11,15 +11,17 @@ class NavBar extends React.Component {
     return(
       <Menu>
         <Menu.Menu>
-          <Menu.Item><Icon name="youtube" size="large"/><Link to='/'>YouTubeList</Link></Menu.Item>
+          <Link to='/'><Menu.Item><Icon name="youtube" size="large"/>YouTubeList</Menu.Item></Link>
+
         </Menu.Menu>
         <Menu.Menu position="right">
-          {!loggedIn && <Menu.Item><Link to='/signup'>Sign Up</Link></Menu.Item>}
-          {!loggedIn && <Menu.Item><Link to='/login'>Login</Link></Menu.Item>}
-          {loggedIn && <Dropdown icon='dropdown' text='Account' className='link item'>
-            <Dropdown.Menu>
-              <Dropdown.Item><Link to='/profile'>Profile</Link></Dropdown.Item>
-              <Dropdown.Item onClick={this.props.onLogout}><Link to='/login'>Logout</Link></Dropdown.Item>
+          {!loggedIn && <Link to='/signup'><Menu.Item>Sign Up</Menu.Item></Link>}
+          {!loggedIn && <Link to='/login'><Menu.Item>Login</Menu.Item></Link>}
+          {loggedIn && <Link to='/newplaylist'><Menu.Item><Button>Create a new Playlist</Button></Menu.Item></Link>}
+          {loggedIn && <Dropdown icon='dropdown' text={localStorage.username} className='link item'>
+            <Dropdown.Menu inline>
+              <Link to='/profile'><Dropdown.Item>Profile</Dropdown.Item></Link>
+              <Link to='/login'><Dropdown.Item onClick={this.props.onLogout}>Logout</Dropdown.Item></Link>
             </Dropdown.Menu>
           </Dropdown>}
         </Menu.Menu>

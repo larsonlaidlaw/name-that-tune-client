@@ -18,7 +18,7 @@ class LoginForm extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
-    this.props.onSendLogin(this.state)
+    this.props.onLogin(this.state)
     this.setState({username: '', password: ''})
     console.log(this.state)
   }
@@ -68,7 +68,6 @@ class LoginForm extends Component {
     )
   }
 }
-
 
 
 export default LoginForm

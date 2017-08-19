@@ -9,3 +9,13 @@
 .button {
   color: white;
 }
+
+
+.ui.menu .item {
+  line-height: inherit;
+}
+
+.ui.segment {
+  box-shadow: none;
+  border: none;
+}
