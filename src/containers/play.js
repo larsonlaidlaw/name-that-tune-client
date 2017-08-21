@@ -20,7 +20,8 @@ class Player extends Component {
     searchId: 'igotthis',
     searchVideoTitle: 'test',
     videoObjects: [],
-    listTitle: 'Test'
+    listTitle: 'Test',
+    stackBreak: 0
   }
 
   componentDidMount(){
@@ -34,10 +35,15 @@ class Player extends Component {
       .then(data => {
 
         if (data.status === 404 || data.videos.length < 1 ){
-          return this.fetchData()
+          this.setState({
+            stackBreak: this.state.stackBreak + 1
+          })
+          if (this.state.stackBreak < 10) {
+            return this.fetchData()
+          }
         }
 
-        
+
 
         let videoIds = []
         let videoChannels = []
@@ -197,6 +203,7 @@ class Player extends Component {
                   changeI={this.changeI}
                   videoObjects={this.state.videoObjects}
                   savePlaylist={this.savePlaylist}
+                  fetchData={this.fetchData}
                 />
 
             </Grid.Column>

@@ -1,5 +1,5 @@
 import React from 'react'
-import {List, Modal, Button, Input} from 'semantic-ui-react'
+import {List, Modal, Button, Input, Icon, Popup} from 'semantic-ui-react'
 
 
 class Tracklist extends React.Component{
@@ -11,7 +11,15 @@ class Tracklist extends React.Component{
 
     return(
       <div>
-        {this.props.videoList.length > 0 ? <h3>Song List</h3> : ""}
+        {this.props.videoList.length > 0 ?
+          <h3>Video List
+            <Popup
+              trigger={<Icon name='refresh'  onClick={this.props.fetchData} />}
+              content="If you don't see all of your videos, try refreshing"
+              basic
+            />
+          </h3> : ""
+        }
         <List celled ordered>
           {videos}
         </List>
@@ -19,7 +27,6 @@ class Tracklist extends React.Component{
           ? <Button onClick={this.props.savePlaylist}>Update Playlist</Button>
           : ''
         }
-
       </div>
     )
   }
