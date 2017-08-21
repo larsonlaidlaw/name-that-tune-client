@@ -15,12 +15,21 @@ class CreateListContainer extends Component {
     results: [],
     searchTerm: '',
     videoObject: {},
-    videoList: []
+    videoList: [],
+    listCount: null
   }
 
   //Search Functions
   componentWillMount() {
     this.resetComponent()
+  }
+
+  componentDidMount(){
+    fetch('http://localhost:3000/api/v1/lists/')
+    .then(response=>response.json())
+    .then(data=>this.setState({
+      listCount: data.length
+    }))
   }
 
   resetComponent = () => {
@@ -54,9 +63,9 @@ class CreateListContainer extends Component {
     console.log(obj.id.videoId)
   }
 
-  addVideoToPlaylist = () => {
+  addVideoToPlaylist = (video) => {
     this.setState({
-      videoList: this.state.videoList.concat(this.state.videoObject)
+      videoList: this.state.videoList.concat(video)
     })
   }
 
@@ -74,8 +83,15 @@ class CreateListContainer extends Component {
     })
   }
 
+  increaseListCount = () => {
+    this.setState({
+      listCount: this.state.listCount + 1
+    })
+  }
+
 
   render(){
+    console.log(this.state.listCount)
     this.state.videoObject.snippet && console.log(this.state.videoObject.snippet.title)
     return(
       <div>
@@ -91,7 +107,14 @@ class CreateListContainer extends Component {
                 />
             </Grid.Column>
             <Grid.Column width={3} >
-                <Playlist videoList={this.state.videoList} videoObject={this.state.videoObject} changeVideoId={this.changeVideoId} resetVideoList={this.resetVideoList}/>
+                <Playlist
+                  videoList={this.state.videoList}
+                  videoObject={this.state.videoObject}
+                  changeVideoId={this.changeVideoId}
+                  resetVideoList={this.resetVideoList}
+                  increaseListCount={this.increaseListCount}
+                  listCount={this.state.listCount}
+                />
             </Grid.Column>
           </Grid.Row>
 
@@ -100,6 +123,7 @@ class CreateListContainer extends Component {
               <SearchResults
                 searchResults={this.state.results}
                 handleVideoSelection={this.handleVideoSelection}
+                addVideoToPlaylist={this.addVideoToPlaylist}
               />
             </Grid.Column>
           </Grid.Row>

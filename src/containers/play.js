@@ -2,6 +2,10 @@ import React, { Component } from 'react'
 import YouTube from 'react-youtube'
 import { Icon, Container, Grid, List, Rail, Header, Image, Button } from 'semantic-ui-react'
 import Tracklist from '../components/play/tracklist'
+import Search from '../components/createList/search'
+import SearchResultsPlay from '../components/play/searchResultsPlay'
+
+const googleApiKey = 'AIzaSyAK0A249rjWnFiTZqSCZRwwVc5PvOpE8oE'
 
 
 class Player extends Component {
@@ -11,13 +15,29 @@ class Player extends Component {
     videoTitles: [],
     player: null,
     i: 0,
-    playing: false
+    playing: false,
+    results: [],
+    searchId: 'igotthis',
+    searchVideoTitle: 'test',
+    videoObjects: [],
+    listTitle: 'Test'
   }
 
   componentDidMount(){
+    this.fetchData()
+  }
+
+  fetchData = () => {
+    if (!isNaN(this.props.match.params.id) ){
     fetch(`http://localhost:3000/api/v1/lists/${this.props.match.params.id}`)
       .then(response=>response.json())
       .then(data => {
+
+        if (data.status === 404 || data.videos.length < 1 ){
+          return this.fetchData()
+        }
+
+        
 
         let videoIds = []
         let videoChannels = []
@@ -30,6 +50,8 @@ class Player extends Component {
         })
         this.setState({ videoIds, videoChannels, videoTitles })
       })
+
+    }
   }
 
   onReady = (event) => {
@@ -82,17 +104,77 @@ class Player extends Component {
     })
   }
 
+  handleSearchChange = (event) => {
+    this.setState({searchTerm: event.target.value })
+  }
+
+  handleSearchSubmit = (event)=> {
+    event.preventDefault()
+    fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=${this.state.searchTerm}&type=video&key=${googleApiKey}`)
+    .then(resp => resp.json())
+    .then(jsonObject => {
+      this.setState({
+        results: jsonObject.items,
+      })
+    })
+  }
+
+  handleVideoSelection = (obj) => {
+    this.setState({
+      i: null,
+      searchId: obj.id.videoId,
+      searchVideoTitle: obj.snippet.title
+    })
+    console.log(obj.id.videoId)
+  }
+
+  addVideoToPlaylist = (obj) => {
+    this.setState({
+      videoIds: this.state.videoIds.concat(obj.id.videoId),
+      videoChannels: this.state.videoChannels.concat(obj.snippet.channelTitle),
+      videoTitles: this.state.videoTitles.concat(obj.snippet.title),
+      videoObjects: this.state.videoObjects.concat(obj)
+    })
+  }
+
+  savePlaylist = () => {
+   let savedPlaylist = []
+   this.state.videoObjects.map((video)=>{
+     savedPlaylist.push({
+       video_id: video.id.videoId,
+       video_title: video.snippet.title,
+       video_channel: video.snippet.channelTitle,
+     })
+   })
+   let list = { title: this.state.listTitle, list_id: this.props.match.params.id, videos : savedPlaylist, user_id: localStorage.getItem('id')}
+   this.postPlaylist(list)
+   this.setState({
+     videoObjects: []
+   })
+ }
+
+   postPlaylist = (array) => {
+     fetch("http://localhost:3000/api/v1/videos",
+       {
+         headers: {
+           'Accept': 'application/json',
+           'Content-Type': 'application/json'
+         },
+         method: 'POST',
+         body: JSON.stringify({'payload': array})
+       })
+   }
+
   render(){
-    console.log('player console',this.state.player)
 
     return(
       <div>
         <Grid centered>
           <Grid.Row centered>
-            <Grid.Column width={8} style={{ minWidth: 680 }}  >
-               <Header>{this.state.videoTitles[this.state.i]}</Header>
+            <Grid.Column width={8} style={{ minWidth: 680, maxWidth:680 }}>
+               <Header>{this.state.videoTitles[this.state.i] || this.state.searchVideoTitle}</Header>
                 <YouTube
-                  videoId={this.state.videoIds[this.state.i]}
+                  videoId={this.state.videoIds[this.state.i] || this.state.searchId}
                   onReady={this.onReady}
                   onStateChange={this.onStateChange}
                   onEnd={this.onEnd}
@@ -102,57 +184,41 @@ class Player extends Component {
                   <Button icon='pause' content='Pause' compact onClick={this.onPauseVideo}/>
                   <Button icon='step forward' content='Next' compact onClick={this.onNextVideo}/>
                 </Button.Group>
+                <Search
+                  handleSearchChange={this.handleSearchChange}
+                  handleSearchSubmit={this.handleSearchSubmit}
+                  addVideoToPlaylist={this.addVideoToPlaylist}
+                  searchTerm={this.state.searchTerm}
+                />
             </Grid.Column>
-            <Grid.Column width={3} >
+            <Grid.Column width={5} >
                 <Tracklist
                   videoList={this.state.videoTitles}
                   changeI={this.changeI}
+                  videoObjects={this.state.videoObjects}
+                  savePlaylist={this.savePlaylist}
                 />
+
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row centered>
+            <Grid.Column width={8} style={{ minWidth: 680, maxWidth:680 }}>
+              <SearchResultsPlay
+                searchResults={this.state.results}
+                handleVideoSelection={this.handleVideoSelection}
+                addVideoToPlaylist={this.addVideoToPlaylist}
+
+               />
+            </Grid.Column>
+            <Grid.Column width={5} >
+
             </Grid.Column>
           </Grid.Row>
 
         </Grid>
       </div>
     )
-
-
   }
 }
 
 export default Player
-
-// return(
-//   <div>
-//     <Container textAlign="center">
-//       <Grid >
-//         <Grid.Row columns="2">
-//           <Grid.Column >
-//
-//
-//
-//             <YouTube
-//               videoId={this.state.videoIds[this.state.i]}
-//               onReady={this.onReady}
-//               onStateChange={this.onStateChange}
-//               onEnd={this.onEnd}
-//             />
-//
-//             <Icon link name="play" size='large' onClick={this.onPlayVideo}/>
-//             <Icon link name="pause" size='large' onClick={this.onPauseVideo} />
-//             <Icon link name="step forward" size='large' onClick={this.onNextVideo} />
-//
-//           </Grid.Column>
-//           <Grid.Column>
-//           <List>
-//             <List.Item>Dope ass shit</List.Item>
-//             <List.Item>Doper ass shit</List.Item>
-//             <List.Item>Dopest ass shit</List.Item>
-//           </List>
-//           </Grid.Column>
-//
-//
-//         </Grid.Row>
-//       </Grid>
-//     </Container>
-//   </div>
-// )

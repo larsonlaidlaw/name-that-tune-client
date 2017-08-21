@@ -22,24 +22,25 @@ class Profile extends Component {
   render(){
     return(
       <Grid centered columns={2}>
+        <Grid.Column style={{ maxWidth: 300 }}>
+            <Segment.Group id="profile-menu">
+              <Segment textAlign='left'>
+                <p><strong><Link to='/profile/lists'>Created Playlists</Link></strong></p>
+                <p>Check out the lists you've made.</p>
+              </Segment>
+              <Segment textAlign='left'>
+                <p><strong><Link to='/profile/edit'>Edit Profile</Link></strong></p>
+                <p>Edit your username, email, or password.</p>
+              </Segment>
+            </Segment.Group>
+        </Grid.Column>
         <Grid.Column>
           <Segment>
               <Route exact path='/profile/lists' render={()=> <UserList videoLists={this.state.videoLists} />}/>
               <Route exact path='/profile/edit' render={()=> <EditProfile />}/>
-            <Rail position='left'>
-              <Segment.Group>
-                <Segment textAlign='left'>
-                  <p><strong><Link to='/profile/lists'>Created Playlists</Link></strong></p>
-                  <p>Check out the lists you've made.</p>
-                </Segment>
-                <Segment textAlign='left'>
-                  <p><strong><Link to='/profile/edit'>Edit Profile</Link></strong></p>
-                  <p>Edit your username, email, or password.</p>
-                </Segment>
-              </Segment.Group>
-            </Rail>
           </Segment>
         </Grid.Column>
+
       </Grid>
     )
   }

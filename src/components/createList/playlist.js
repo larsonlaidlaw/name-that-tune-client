@@ -1,9 +1,14 @@
 import React, {Component} from 'react'
 import { List, Button, Modal, Image, Header, Input } from 'semantic-ui-react'
+import {Route} from 'react-router-dom'
+import MainRender from './mainRender'
+import RedirectComponent from './redirect'
+
 
 class Playlist extends Component {
   state = {
-    listTitle: ''
+    listTitle: '',
+    redirect: false
   }
 
   savePlaylist = () => {
@@ -18,6 +23,14 @@ class Playlist extends Component {
    let list = { title : this.state.listTitle, videos : savedPlaylist, user_id: localStorage.getItem('id')}
    this.postPlaylist(list)
    this.props.resetVideoList()
+   this.props.increaseListCount()
+   this.setRedirect()
+ }
+
+ setRedirect = () => {
+   this.setState({
+     redirect: true
+   })
  }
 
    postPlaylist = (array, title) => {
@@ -42,27 +55,34 @@ class Playlist extends Component {
      })
    }
 
-  render(){
+  returnValue = () => {
     let videos = this.props.videoList.map((video)=>{
       return <List.Item onClick={()=>this.props.changeVideoId(video.id.videoId)}>{video.snippet.title}</List.Item>
     })
+
+   if (this.state.redirect === false) {
+     return(
+       <MainRender
+         videoList={this.props.videoList}
+         videos={videos}
+         listTitleHandler={this.listTitleHandler}
+         savePlaylist={this.savePlaylist}
+       />
+     )
+   } else {
+     return(
+       <RedirectComponent
+       listCount={this.props.listCount} />
+     )
+   }
+ }
+
+  render(){
+    let returnThis = this.returnValue()
+
     return(
       <div>
-        {this.props.videoList.length > 0 ? <h3>Song List</h3> : ""}
-        <List celled ordered>
-          {videos}
-        </List>
-        {this.props.videoList.length > 1 ?
-          <Modal
-            trigger={<Button>Save Playlist</Button>}
-            // header='Name your playlist'
-            content={<Input label="Name your playlist:" type="text" transparent={true} fluid={true} onChange={this.listTitleHandler}/>}
-            actions={[
-              { key: 'Cancel', content: 'Cancel', color: 'red', triggerClose: true },
-              { key: 'Save', content: 'Save', triggerClose: true, onClick: this.savePlaylist },
-            ]}
-          /> :
-        ""}
+        {returnThis}
       </div>
     )
   }
