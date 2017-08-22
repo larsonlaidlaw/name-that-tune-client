@@ -92,7 +92,7 @@ class CreateListContainer extends Component {
 
 
   render(){
-
+    console.log(this.state.results)
     this.state.videoObject.snippet && console.log(this.state.videoObject.snippet.title)
     return(
       <div>

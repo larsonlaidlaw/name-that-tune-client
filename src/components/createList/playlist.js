@@ -17,7 +17,8 @@ class Playlist extends Component {
      savedPlaylist.push({
        video_id: video.id.videoId,
        video_title: video.snippet.title,
-       video_channel: video.snippet.channelTitle
+       video_channel: video.snippet.channelTitle,
+       thumbnail_url: video.snippet.thumbnails.default.url
      })
    })
    let list = { title : this.state.listTitle, videos : savedPlaylist, user_id: localStorage.getItem('id')}
@@ -60,8 +61,12 @@ class Playlist extends Component {
 
   returnValue = () => {
     let videos = this.props.videoList.map((video)=>{
-      return <List.Item onClick={()=>this.props.changeVideoId(video.id.videoId)}>{video.snippet.title}</List.Item>
+      return(
+        <List.Item
+          onClick={()=>this.props.changeVideoId(video.id.videoId)}>{video.snippet.title}
+        </List.Item>)
     })
+
 
    if (this.state.redirect === false) {
      return(

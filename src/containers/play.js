@@ -17,11 +17,12 @@ class Player extends Component {
     i: 0,
     playing: false,
     results: [],
-    searchId: 'igotthis',
-    searchVideoTitle: 'test',
+    searchId: '',
+    searchVideoTitle: null,
     videoObjects: [],
     listTitle: 'Test',
-    stackBreak: 0
+    stackBreak: 0,
+    data: null
   }
 
   componentDidMount(){
@@ -44,16 +45,20 @@ class Player extends Component {
           }
         }
 
+        console.log(data)
+
         let videoIds = []
         let videoChannels = []
         let videoTitles = []
+        let deleteIDs = []
 
         data.videos.map(video => {
+          deleteIDs.push(video.id)
           videoIds.push(video.video_id)
           videoTitles.push(video.video_title)
           videoChannels.push(video.video_channel)
         })
-        this.setState({ videoIds, videoChannels, videoTitles })
+        this.setState({ data, deleteIDs, videoIds, videoChannels, videoTitles })
       })
 
     }
@@ -84,10 +89,8 @@ class Player extends Component {
     })
   }
 
-
   onStateChange = (event) => {
-    console.log('calling from onstate change', event)
-    console.log('statechange', this.state.playing)
+
     if (event.data === 5 && this.state.i !== 0) {
       this.state.playing && this.onPlayVideo()
     }
@@ -171,15 +174,14 @@ class Player extends Component {
    }
 
   render(){
-
     return(
       <div>
         <Grid centered>
           <Grid.Row centered>
             <Grid.Column width={8} style={{ minWidth: 680, maxWidth:680 }}>
-               <Header>{this.state.videoTitles[this.state.i] || this.state.searchVideoTitle}</Header>
+               <Header>{this.state.videoTitles[this.state.i] || this.state.searchVideoTitle || this.state.videoTitles[0]}</Header>
                 <YouTube
-                  videoId={this.state.videoIds[this.state.i] || this.state.searchId}
+                  videoId={this.state.videoIds[this.state.i] || this.state.searchId || this.state.videoIds[0]}
                   onReady={this.onReady}
                   onStateChange={this.onStateChange}
                   onEnd={this.onEnd}
@@ -202,6 +204,9 @@ class Player extends Component {
                   changeI={this.changeI}
                   videoObjects={this.state.videoObjects}
                   savePlaylist={this.savePlaylist}
+                  fetchData={this.fetchData}
+                  listID={this.props.match}
+                  data={this.state.data}
                   fetchData={this.fetchData}
                 />
 
