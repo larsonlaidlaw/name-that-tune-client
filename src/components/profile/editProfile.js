@@ -1,7 +1,10 @@
 import React from 'react'
 import { Input, Icon, Form, Segment, Button, Header } from 'semantic-ui-react'
 
-const EditProfile = () => (
+const EditProfile = (props) => {
+
+  console.log(props)
+  return(
   <div>
     <Header textAlign='center'>
       Edit Profile
@@ -15,6 +18,7 @@ const EditProfile = () => (
           placeholder='E-mail address'
           name="email"
           onChange={this.handleInputChange}
+          value={props.videoLists.email}
         />
         <Form.Input
           fluid
@@ -23,6 +27,7 @@ const EditProfile = () => (
           placeholder='Username'
           name='username'
           onChange={this.handleInputChange}
+          value={props.videoLists.username}
         />
         <Form.Input
           fluid
@@ -39,5 +44,6 @@ const EditProfile = () => (
     </Form>
   </div>
 )
+}
 
 export default EditProfile

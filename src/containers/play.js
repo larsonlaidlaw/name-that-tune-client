@@ -25,6 +25,7 @@ class Player extends Component {
   }
 
   componentDidMount(){
+    console.log(this.props)
     this.fetchData()
   }
 
@@ -34,7 +35,7 @@ class Player extends Component {
       .then(response=>response.json())
       .then(data => {
 
-        if (data.status === 404 || data.videos.length < 1 ){
+        if (data.status === 404){
           this.setState({
             stackBreak: this.state.stackBreak + 1
           })
@@ -42,8 +43,6 @@ class Player extends Component {
             return this.fetchData()
           }
         }
-
-
 
         let videoIds = []
         let videoChannels = []
@@ -67,7 +66,6 @@ class Player extends Component {
 
   onPlayVideo = () => {
     this.state.player.playVideo()
-    console.log('trying to play', this.state.videoTitles[this.state.i])
     this.setState({
       playing: true
     })
@@ -89,6 +87,7 @@ class Player extends Component {
 
   onStateChange = (event) => {
     console.log('calling from onstate change', event)
+    console.log('statechange', this.state.playing)
     if (event.data === 5 && this.state.i !== 0) {
       this.state.playing && this.onPlayVideo()
     }

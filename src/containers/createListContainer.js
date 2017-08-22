@@ -46,10 +46,10 @@ class CreateListContainer extends Component {
   handleSearchSubmit = (event)=> {
     event.preventDefault()
     fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=${this.state.searchTerm}&type=video&key=${googleApiKey}`)
-    .then(resp => resp.json())
-    .then(jsonObject => {
+    .then(response => response.json())
+    .then(data => {
       this.setState({
-        results: jsonObject.items,
+        results: data.items,
       })
     })
   }
@@ -84,6 +84,7 @@ class CreateListContainer extends Component {
   }
 
   increaseListCount = () => {
+    console.log('are we hitting increaseListCount')
     this.setState({
       listCount: this.state.listCount + 1
     })
@@ -91,7 +92,7 @@ class CreateListContainer extends Component {
 
 
   render(){
-    console.log(this.state.listCount)
+
     this.state.videoObject.snippet && console.log(this.state.videoObject.snippet.title)
     return(
       <div>
@@ -114,6 +115,7 @@ class CreateListContainer extends Component {
                   resetVideoList={this.resetVideoList}
                   increaseListCount={this.increaseListCount}
                   listCount={this.state.listCount}
+                  getListLength={this.props.getListLength}
                 />
             </Grid.Column>
           </Grid.Row>

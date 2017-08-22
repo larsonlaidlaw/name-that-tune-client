@@ -18,9 +18,8 @@ export default function (ComponentParameter, inheritedProps) {
       }
     }
     render(){
-      return <ComponentParameter  {...this.props} />
+      return <ComponentParameter {...inheritedProps} />
     }
   }
-
-  return Authentication
+  return <Authentication />
 }

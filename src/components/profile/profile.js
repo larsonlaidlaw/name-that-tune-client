@@ -37,7 +37,7 @@ class Profile extends Component {
         <Grid.Column>
           <Segment>
               <Route exact path='/profile/lists' render={()=> <UserList videoLists={this.state.videoLists} />}/>
-              <Route exact path='/profile/edit' render={()=> <EditProfile />}/>
+              <Route exact path='/profile/edit' render={()=> <EditProfile videoLists={this.state.videoLists} />}/>
           </Segment>
         </Grid.Column>
 

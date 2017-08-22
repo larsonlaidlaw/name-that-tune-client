@@ -1,18 +1,14 @@
 import React, { Component } from 'react'
 import { Input, Icon } from 'semantic-ui-react'
 
-
-
 class YTSearch extends Component {
   state = {
     searchTerm: '',
   }
 
   render() {
-    console.log(this.state.results)
     return (
       <div>
-
         <form onSubmit={this.props.handleSearchSubmit}>
           <Input
             onChange={this.props.handleSearchChange}

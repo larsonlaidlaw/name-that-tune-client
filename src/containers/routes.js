@@ -65,12 +65,17 @@ class Routes extends React.Component {
     this.setState({
       auth: {
         isLoggedIn: false,
-        user: ''
+        user: '',
       }
     })
   }
 
+  getListLength = (num)=> {
+  return num
+  }
+
   render(){
+    console.log(this.state.listLength)
     return (
       <Router>
         <div>
@@ -79,8 +84,8 @@ class Routes extends React.Component {
           <Route path='/signup' render={()=> this.state.auth.isLoggedIn ?
             <Redirect to="/newplaylist"/> :
             <Signup handleSignup={this.handleSignup}/> } />
-          <Route path='/newplaylist' component={Auth(CreateListContainer)}></Route>
-          <Route path='/play/:id' component={Play}></Route>
+          <Route path='/newplaylist' render={()=> Auth(CreateListContainer)}></Route>
+          <Route path='/play/:id' render={(props)=> <Play {...props}/>}></Route>
           <Route path='/login' render={()=> this.state.auth.isLoggedIn ?
             <Redirect to="/newplaylist"/> :
             <Login onLogin={this.onLogin}/> }

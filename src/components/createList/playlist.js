@@ -23,17 +23,18 @@ class Playlist extends Component {
    let list = { title : this.state.listTitle, videos : savedPlaylist, user_id: localStorage.getItem('id')}
    this.postPlaylist(list)
    this.props.resetVideoList()
-   this.props.increaseListCount()
-   this.setRedirect()
+
  }
 
  setRedirect = () => {
+   console.log('are we hitting redirect')
    this.setState({
      redirect: true
    })
+   console.log('redirect 2', this.state)
  }
 
-   postPlaylist = (array, title) => {
+   postPlaylist = (array) => {
      fetch("http://localhost:3000/api/v1/videos",
        {
          headers: {
@@ -43,6 +44,8 @@ class Playlist extends Component {
          method: 'POST',
          body: JSON.stringify({'payload': array})
        })
+       .then(() => this.props.increaseListCount())
+       .then(() => this.setRedirect())
    }
 
    doSomething = () => {
@@ -78,6 +81,7 @@ class Playlist extends Component {
  }
 
   render(){
+    console.log('redirect',this.state.redirect)
     let returnThis = this.returnValue()
 
     return(
