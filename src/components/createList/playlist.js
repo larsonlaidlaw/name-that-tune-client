@@ -3,6 +3,8 @@ import { List } from 'semantic-ui-react'
 import MainRender from './mainRender'
 import RedirectComponent from './redirect'
 
+const BASE_URL = process.env.REACT_APP_API
+
 
 class Playlist extends Component {
   state = {
