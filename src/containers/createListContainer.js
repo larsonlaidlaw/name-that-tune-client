@@ -8,8 +8,8 @@ import SearchResults from '../components/createList/searchResults'
 import Playlist from '../components/createList/playlist'
 
 const googleApiKey = 'AIzaSyAK0A249rjWnFiTZqSCZRwwVc5PvOpE8oE'
-var element = document.getElementById('autoFocus');
 
+const BASE_URL = process.env.REACT_APP_API
 
 class CreateListContainer extends Component {
   state = {
@@ -29,7 +29,7 @@ class CreateListContainer extends Component {
   }
 
   componentDidMount(){
-    fetch('http://localhost:3000/api/v1/lists/')
+    fetch(`${BASE_URL}/api/v1/lists/`)
     .then(response=>response.json())
     .then(data=>this.setState({
       listCount: data.length

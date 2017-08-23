@@ -6,6 +6,8 @@ import Search from '../components/createList/search'
 import SearchResultsPlay from '../components/play/searchResultsPlay'
 
 const googleApiKey = 'AIzaSyAK0A249rjWnFiTZqSCZRwwVc5PvOpE8oE'
+const BASE_URL = process.env.REACT_APP_API
+
 
 
 class Player extends Component {
@@ -32,7 +34,7 @@ class Player extends Component {
 
   fetchData = () => {
     if (!isNaN(this.props.match.params.id) ){
-    fetch(`http://localhost:3000/api/v1/lists/${this.props.match.params.id}`)
+    fetch(`${BASE_URL}/api/v1/lists/${this.props.match.params.id}`)
       .then(response=>response.json())
       .then(data => {
 
@@ -170,7 +172,7 @@ class Player extends Component {
  }
 
    postPlaylist = (array) => {
-     fetch("http://localhost:3000/api/v1/videos",
+     fetch(`${BASE_URL}/api/v1/videos`,
        {
          headers: {
            'Accept': 'application/json',

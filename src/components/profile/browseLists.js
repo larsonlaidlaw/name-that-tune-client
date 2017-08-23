@@ -1,5 +1,7 @@
 import React from 'react'
 import {List} from 'semantic-ui-react'
+const BASE_URL = process.env.REACT_APP_API
+
 
 class BrowseLists extends React.Component {
   state = {
@@ -7,7 +9,7 @@ class BrowseLists extends React.Component {
   }
 
   componentDidMount(){
-    fetch('http://localhost:3000/api/v1/lists')
+    fetch(`${BASE_URL}/api/v1/lists`)
       .then(response => response.json())
       .then((data) => {
         console.log('1', data)

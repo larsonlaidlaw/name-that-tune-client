@@ -5,6 +5,9 @@ import UserList from './userLists'
 import { Route } from 'react-router-dom'
 import EditProfile from './editProfile'
 
+const BASE_URL = process.env.REACT_APP_API
+
+
 class Profile extends Component {
 
   state = {
@@ -12,7 +15,7 @@ class Profile extends Component {
   }
 
   componentDidMount(){
-    fetch(`http://localhost:3000/api/v1/users/${localStorage.getItem('id')}`)
+    fetch(`${BASE_URL}/api/v1/users/${localStorage.getItem('id')}`)
     .then(response=>response.json())
     .then(data=>this.setState({
       videoLists: data

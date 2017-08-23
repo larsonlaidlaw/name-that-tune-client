@@ -1,6 +1,7 @@
 import React from 'react'
 import {List, Button, Icon} from 'semantic-ui-react'
 
+const BASE_URL = process.env.REACT_APP_API
 
 class Tracklist extends React.Component{
 
@@ -16,7 +17,7 @@ class Tracklist extends React.Component{
   }
 
   removeFromList = (id) => {
-    fetch(`http://localhost:3000/api/v1/videos/${id}`,
+    fetch(`${BASE_URL}/api/v1/videos/${id}`,
       {
         headers: {
           'Accept': 'application/json',

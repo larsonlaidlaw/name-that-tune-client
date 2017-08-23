@@ -37,7 +37,7 @@ class Playlist extends Component {
 
    postPlaylist = (array) => {
      console.log('coming from the post', array)
-     fetch("http://localhost:3000/api/v1/videos",
+     fetch(`${BASE_URL}/api/v1/videos`,
        {
          headers: {
            'Accept': 'application/json',
