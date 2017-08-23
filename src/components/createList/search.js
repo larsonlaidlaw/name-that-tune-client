@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Input, Icon } from 'semantic-ui-react'
+import { Input } from 'semantic-ui-react'
 
 class YTSearch extends Component {
   state = {
@@ -8,13 +8,13 @@ class YTSearch extends Component {
 
   render() {
     return (
-      <div>
+      <div className='searchMargin'>
         <form onSubmit={this.props.handleSearchSubmit}>
           <Input
             onChange={this.props.handleSearchChange}
             icon='search'
-            placeholder='Search...'
-            value={this.searchTerm}
+            placeholder='Search for a video...'
+            value={this.props.searchTerm}
           />
         </form>
       </div>

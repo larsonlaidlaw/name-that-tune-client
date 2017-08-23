@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
-import { List, Button, Modal, Image, Header, Input } from 'semantic-ui-react'
-import {Route} from 'react-router-dom'
+import { List } from 'semantic-ui-react'
 import MainRender from './mainRender'
 import RedirectComponent from './redirect'
 
@@ -20,6 +19,7 @@ class Playlist extends Component {
        video_channel: video.snippet.channelTitle,
        thumbnail_url: video.snippet.thumbnails.default.url
      })
+     return null
    })
    let list = { title : this.state.listTitle, videos : savedPlaylist, user_id: localStorage.getItem('id')}
    this.postPlaylist(list)
@@ -36,6 +36,7 @@ class Playlist extends Component {
  }
 
    postPlaylist = (array) => {
+     console.log('coming from the post', array)
      fetch("http://localhost:3000/api/v1/videos",
        {
          headers: {
@@ -63,7 +64,10 @@ class Playlist extends Component {
     let videos = this.props.videoList.map((video)=>{
       return(
         <List.Item
-          onClick={()=>this.props.changeVideoId(video.id.videoId)}>{video.snippet.title}
+          onClick={()=>this.props.changeVideoId(video)}
+          style={{cursor: "pointer"}}
+        >
+          {video.snippet.title}
         </List.Item>)
     })
 

@@ -1,7 +1,6 @@
 import React from 'react'
-import { Button, Checkbox, Form, Input, Modal, Image, Header, Grid, Segment, Message } from 'semantic-ui-react'
+import { Button, Form, Header, Grid, Segment, Message } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
-import AuthAdapter from '../auth/authAdapter'
 
 class Signup extends React.Component{
 

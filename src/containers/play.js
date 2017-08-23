@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import YouTube from 'react-youtube'
-import { Icon, Container, Grid, List, Rail, Header, Image, Button } from 'semantic-ui-react'
+import { Grid, Header, Button } from 'semantic-ui-react'
 import Tracklist from '../components/play/tracklist'
 import Search from '../components/createList/search'
 import SearchResultsPlay from '../components/play/searchResultsPlay'
@@ -57,6 +57,7 @@ class Player extends Component {
           videoIds.push(video.video_id)
           videoTitles.push(video.video_title)
           videoChannels.push(video.video_channel)
+          return null
         })
         this.setState({ data, deleteIDs, videoIds, videoChannels, videoTitles })
       })
@@ -87,6 +88,11 @@ class Player extends Component {
     this.setState({
       i: this.state.i + 1
     })
+    if (this.state.i >= this.state.videoTitles.length - 1){
+      this.setState({
+        i: 0
+      })
+    }
   }
 
   onStateChange = (event) => {
@@ -152,7 +158,9 @@ class Player extends Component {
        video_id: video.id.videoId,
        video_title: video.snippet.title,
        video_channel: video.snippet.channelTitle,
+       thumbnail_url: video.snippet.thumbnails.default.url
      })
+     return null
    })
    let list = { title: this.state.listTitle, list_id: this.props.match.params.id, videos : savedPlaylist, user_id: localStorage.getItem('id')}
    this.postPlaylist(list)
@@ -186,17 +194,19 @@ class Player extends Component {
                   onStateChange={this.onStateChange}
                   onEnd={this.onEnd}
                 />
-                <Button.Group labeled compact>
-                  <Button icon='play' content='Play' compact onClick={this.onPlayVideo}/>
-                  <Button icon='pause' content='Pause' compact onClick={this.onPauseVideo}/>
-                  <Button icon='step forward' content='Next' compact onClick={this.onNextVideo}/>
-                </Button.Group>
-                <Search
-                  handleSearchChange={this.handleSearchChange}
-                  handleSearchSubmit={this.handleSearchSubmit}
-                  addVideoToPlaylist={this.addVideoToPlaylist}
-                  searchTerm={this.state.searchTerm}
-                />
+                <div className='buttonSearch'>
+                  <Button.Group labeled compact>
+                    <Button icon='play' content='Play' compact onClick={this.onPlayVideo}/>
+                    <Button icon='pause' content='Pause' compact onClick={this.onPauseVideo}/>
+                    <Button icon='step forward' content='Next' compact onClick={this.onNextVideo}/>
+                  </Button.Group>
+                  <Search
+                    handleSearchChange={this.handleSearchChange}
+                    handleSearchSubmit={this.handleSearchSubmit}
+                    addVideoToPlaylist={this.addVideoToPlaylist}
+                    searchTerm={this.state.searchTerm}
+                  />
+                </div>
             </Grid.Column>
             <Grid.Column width={5} >
                 <Tracklist
@@ -207,20 +217,20 @@ class Player extends Component {
                   fetchData={this.fetchData}
                   listID={this.props.match}
                   data={this.state.data}
-                  fetchData={this.fetchData}
                 />
-
             </Grid.Column>
           </Grid.Row>
+
           <Grid.Row centered>
+
             <Grid.Column width={8} style={{ minWidth: 680, maxWidth:680 }}>
               <SearchResultsPlay
                 searchResults={this.state.results}
                 handleVideoSelection={this.handleVideoSelection}
                 addVideoToPlaylist={this.addVideoToPlaylist}
-
                />
             </Grid.Column>
+
             <Grid.Column width={5} >
 
             </Grid.Column>

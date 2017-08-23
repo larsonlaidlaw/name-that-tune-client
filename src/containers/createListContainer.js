@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import YouTube from 'react-youtube';
-import { Grid, Container, Divider, Image, Segment  } from 'semantic-ui-react'
+import { Grid, Button, Header, Container  } from 'semantic-ui-react'
 
 //other files
 import Search from '../components/createList/search'
@@ -8,18 +8,22 @@ import SearchResults from '../components/createList/searchResults'
 import Playlist from '../components/createList/playlist'
 
 const googleApiKey = 'AIzaSyAK0A249rjWnFiTZqSCZRwwVc5PvOpE8oE'
+var element = document.getElementById('autoFocus');
+
 
 class CreateListContainer extends Component {
   state = {
-    videoId: 'z9DJn5EMtZQ',
+    videoId: '',
+    videoTitle: '',
     results: [],
     searchTerm: '',
     videoObject: {},
     videoList: [],
-    listCount: null
+    listCount: null,
+    switch: false
   }
 
-  //Search Functions
+  // Search Functions
   componentWillMount() {
     this.resetComponent()
   }
@@ -31,6 +35,7 @@ class CreateListContainer extends Component {
       listCount: data.length
     }))
   }
+
 
   resetComponent = () => {
     this.setState({
@@ -50,6 +55,7 @@ class CreateListContainer extends Component {
     .then(data => {
       this.setState({
         results: data.items,
+        switch: true
       })
     })
   }
@@ -58,7 +64,8 @@ class CreateListContainer extends Component {
   handleVideoSelection = (obj) => {
     this.setState({
       videoObject: obj,
-      videoId: obj.id.videoId
+      videoId: obj.id.videoId,
+      videoTitle: obj.snippet.title
     })
     console.log(obj.id.videoId)
   }
@@ -69,9 +76,10 @@ class CreateListContainer extends Component {
     })
   }
 
-  changeVideoId = (videoId) => {
+  changeVideoId = (video) => {
     this.setState({
-      videoId: videoId
+      videoId: video.id.videoId,
+      videoTitle: video.snippet.title
     })
   }
 
@@ -90,47 +98,76 @@ class CreateListContainer extends Component {
     })
   }
 
+  divToRender = () => {
+    if (this.state.switch === false){
+      return(
+        <Container id="dragons">
+          <Search
+            handleSearchChange={this.handleSearchChange}
+            handleSearchSubmit={this.handleSearchSubmit}
+            addVideoToPlaylist={this.addVideoToPlaylist}
+            searchTerm={this.state.searchTerm}
+          />
+        </Container>
+
+      )} else {
+        return(
+          <div>
+            <Grid centered>
+              <Grid.Row centered>
+                <Grid.Column width={8} style={{ minWidth: 680, maxWidth: 680 }}  >
+                  <Header>{this.state.videoTitle}</Header>
+                    <YouTube videoId={this.state.videoId}/>
+                      <div className='buttonSearch'>
+                        <Button.Group labeled compact>
+                          <Button icon='play' content='Play' compact onClick={this.onPlayVideo}/>
+                          <Button icon='pause' content='Pause' compact onClick={this.onPauseVideo}/>
+                          <Button icon='step forward' content='Next' compact onClick={this.onNextVideo}/>
+                        </Button.Group>
+                        <Search
+                          handleSearchChange={this.handleSearchChange}
+                          handleSearchSubmit={this.handleSearchSubmit}
+                          addVideoToPlaylist={this.addVideoToPlaylist}
+                          searchTerm={this.state.searchTerm}
+                        />
+                      </div>
+                </Grid.Column>
+                <Grid.Column width={5} >
+                    <Playlist
+                      videoList={this.state.videoList}
+                      videoObject={this.state.videoObject}
+                      changeVideoId={this.changeVideoId}
+                      resetVideoList={this.resetVideoList}
+                      increaseListCount={this.increaseListCount}
+                      listCount={this.state.listCount}
+                      getListLength={this.props.getListLength}
+                    />
+                </Grid.Column>
+              </Grid.Row>
+
+              <Grid.Row centered >
+                <Grid.Column width={8} style={{ minWidth: 680, maxWidth:680 }} >
+                  <SearchResults
+                    searchResults={this.state.results}
+                    handleVideoSelection={this.handleVideoSelection}
+                    addVideoToPlaylist={this.addVideoToPlaylist}
+                  />
+                </Grid.Column>
+                <Grid.Column width={5} >
+
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
+          </div>
+        )
+      }
+    }
+
+
 
   render(){
-    console.log(this.state.results)
-    this.state.videoObject.snippet && console.log(this.state.videoObject.snippet.title)
     return(
-      <div>
-        <Grid centered>
-          <Grid.Row centered>
-            <Grid.Column width={8} style={{ minWidth: 680 }}  >
-                <YouTube videoId={this.state.videoId}/>
-                <Search
-                  handleSearchChange={this.handleSearchChange}
-                  handleSearchSubmit={this.handleSearchSubmit}
-                  addVideoToPlaylist={this.addVideoToPlaylist}
-                  searchTerm={this.state.searchTerm}
-                />
-            </Grid.Column>
-            <Grid.Column width={3} >
-                <Playlist
-                  videoList={this.state.videoList}
-                  videoObject={this.state.videoObject}
-                  changeVideoId={this.changeVideoId}
-                  resetVideoList={this.resetVideoList}
-                  increaseListCount={this.increaseListCount}
-                  listCount={this.state.listCount}
-                  getListLength={this.props.getListLength}
-                />
-            </Grid.Column>
-          </Grid.Row>
-
-          <Grid.Row centered columns={1}>
-            <Grid.Column width={11} >
-              <SearchResults
-                searchResults={this.state.results}
-                handleVideoSelection={this.handleVideoSelection}
-                addVideoToPlaylist={this.addVideoToPlaylist}
-              />
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
-      </div>
+      this.divToRender()
     )
   }
 }

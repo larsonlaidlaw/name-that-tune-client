@@ -1,22 +1,20 @@
+import _ from 'lodash'
 import React from 'react'
 import { Container, Grid, Segment, Image, Rail } from 'semantic-ui-react'
 
-const LandingPage = () => (
-  <Grid centered columns={3}>
-    <Grid.Column>
-      <Segment>
-        <Image src='https://react.semantic-ui.com/assets/images/wireframe/paragraph.png' />
+class LandingPage extends React.Component {
 
-        <Rail dividing position='left'>
-          <Segment>Left Rail Content</Segment>
-        </Rail>
 
-        <Rail position='right'>
-          <Segment>Right Rail Content</Segment>
-        </Rail>
-      </Segment>
-    </Grid.Column>
-  </Grid>
-)
+  render(){
+
+
+
+
+    return(
+    <div>div stuff</div>
+    )
+  }
+}
+
 
 export default LandingPage

@@ -1,5 +1,5 @@
 import React, { Component} from 'react'
-import { Button, Checkbox, Form, Input, Modal, Image, Header, Grid, Segment, Message } from 'semantic-ui-react'
+import { Button, Form, Header, Grid, Segment, Message } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 
 class LoginForm extends Component {
@@ -33,7 +33,7 @@ class LoginForm extends Component {
           verticalAlign='middle'
         >
           <Grid.Column style={{ maxWidth: 450 }}>
-            <Header as='h2'  textAlign='center'>
+            <Header textAlign='center'>
               Sign in to your account
             </Header>
             <Form onSubmit={this.handleSubmit} size='large'>

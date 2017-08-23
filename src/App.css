@@ -29,3 +29,42 @@
 .delete-icon  {
   opacity: 0
 }
+
+.removeMaxWidth {
+  max-width: none
+}
+
+.buttonSearch {
+  display: flex;
+  margin-top: 8px;
+  margin-right: 12px;
+}
+
+.buttonSearch > .buttons {
+  flex-shrink: 0;
+}
+
+.buttonSearch .input {
+  width: 100%;
+}
+
+.searchMargin {
+  margin-left: 10px;
+  width: 100%;
+}
+
+#mainContainer {
+  margin-top: 23px;
+}
+
+#dragons {
+  margin-top: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+#dragons .searchMargin{
+  width: auto;
+}

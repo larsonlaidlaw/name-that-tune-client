@@ -4,7 +4,7 @@ import {List, Button, Modal, Input} from 'semantic-ui-react'
 const MainRender = (props) => {
   return (
     <div>
-      {props.videoList.length > 0 ? <h3>Song List</h3> : ""}
+      {props.videoList.length > 0 ? <h3>Video List</h3> : ""}
       <List celled ordered>
         {props.videos}
       </List>

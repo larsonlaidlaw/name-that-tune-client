@@ -1,5 +1,5 @@
 import React from 'react'
-import {List, Modal, Button, Input, Icon, Popup} from 'semantic-ui-react'
+import {List, Button, Icon} from 'semantic-ui-react'
 
 
 class Tracklist extends React.Component{
@@ -46,7 +46,7 @@ class Tracklist extends React.Component{
       let videos = this.props.videoList.map((video, index)=> {
         return(
           <List.Item onClick={()=> this.props.changeI(index)}>
-            <List.Content>
+            <List.Content style={{cursor: "pointer"}}>
               {video}
             </List.Content>
           </List.Item>

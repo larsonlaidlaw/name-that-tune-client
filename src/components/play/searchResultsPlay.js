@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image, List, Icon, Button } from 'semantic-ui-react'
+import { Image, List, Icon } from 'semantic-ui-react'
 
 const SearchResultsPlay = (props) => {
   console.log('from search results play',props)
@@ -16,7 +16,7 @@ const SearchResultsPlay = (props) => {
   return(
     <div>
     <List selection verticalAlign='middle'>{results}</List>
-      
+
     </div>
   )
 }

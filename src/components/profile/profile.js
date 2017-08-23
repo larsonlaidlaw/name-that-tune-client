@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { Segment, Grid, Image, Icon, Button, Rail, Header } from 'semantic-ui-react'
+import { Segment, Grid } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import UserList from './userLists'
-import { BrowserRouter as Router, Route, Redirect} from 'react-router-dom'
+import { Route } from 'react-router-dom'
 import EditProfile from './editProfile'
 
 class Profile extends Component {
