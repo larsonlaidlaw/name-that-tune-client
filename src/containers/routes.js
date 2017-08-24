@@ -21,7 +21,8 @@ class Routes extends React.Component {
   state = {
     auth: {
       isLoggedIn: localStorage.getItem('id'),
-      user: ''
+      user: '',
+      error: null
     }
   }
 
@@ -30,7 +31,10 @@ class Routes extends React.Component {
     .then( res => {
       //check for an error message
       if ( res.error ) {
-        console.log("do nothing")
+        console.log(res.error)
+        this.setState({
+          error: res.error
+        })
       } else {
         console.log("auth adapter", res)
         localStorage.setItem('jwt', res.jwt)
@@ -39,7 +43,8 @@ class Routes extends React.Component {
         this.setState({
           auth:{
             isLoggedIn: localStorage.getItem('id'),
-            user: res.username
+            user: res.username,
+            error: null
           }
         })
       }
@@ -98,7 +103,7 @@ class Routes extends React.Component {
 
             <Route path='/login' render={()=> this.state.auth.isLoggedIn ?
               <Redirect to="/newplaylist"/> :
-              <Login onLogin={this.onLogin}/> }
+              <Login onLogin={this.onLogin} error={this.state.error}/> }
             />
 
             <Route path='/profile' component={Profile}/>

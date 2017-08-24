@@ -28,7 +28,7 @@ class Profile extends Component {
         <Grid.Column style={{ maxWidth: 300 }}>
             <Segment.Group id="profile-menu">
               <Segment textAlign='left'>
-                <p><strong><Link to='/profile/lists'>Created Playlists</Link></strong></p>
+                <p><strong><Link to='/profile'>Created Playlists</Link></strong></p>
                 <p>Check out the lists you've made.</p>
               </Segment>
               <Segment textAlign='left'>
@@ -39,7 +39,7 @@ class Profile extends Component {
         </Grid.Column>
         <Grid.Column>
           <Segment>
-              <Route exact path='/profile/lists' render={()=> <UserList videoLists={this.state.videoLists} />}/>
+              <Route exact path='/profile' render={()=> <UserList videoLists={this.state.videoLists} />}/>
               <Route exact path='/profile/edit' render={()=> <EditProfile videoLists={this.state.videoLists} />}/>
           </Segment>
         </Grid.Column>

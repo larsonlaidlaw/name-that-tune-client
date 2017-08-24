@@ -7,12 +7,19 @@ class Signup extends React.Component{
   state = {
     username:'',
     email: '',
-    password:''
+    password:'',
+    checked: false
   }
 
   handleInputChange = (event) => {
     this.setState({
       [event.target.name]:event.target.value
+    })
+  }
+
+  checkHandler = () => {
+    this.setState({
+      checked: !this.state.checked
     })
   }
 
@@ -41,6 +48,7 @@ class Signup extends React.Component{
               placeholder='E-mail address'
               name="email"
               onChange={this.handleInputChange}
+              type="email"
             />
             <Form.Input
               fluid
@@ -59,9 +67,18 @@ class Signup extends React.Component{
               name='password'
               onChange={this.handleInputChange}
             />
-            <Form.Checkbox label='I agree to the Terms and Conditions' />
+            <Form.Checkbox
+              label='I agree to the Terms and Conditions'
+              onClick={this.checkHandler}
+             />
 
-            <Button fluid type="submit">Sign up</Button>
+              {this.state.email.includes('@') &&
+              this.state.username !== '' &&
+              this.state.checked &&
+              this.state.password !== '' ?
+              <Button fluid type="submit">Sign up</Button> :
+              <Button fluid type="submit" disabled>Sign up</Button>
+            }
           </Segment>
         </Form>
         <Message>

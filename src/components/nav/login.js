@@ -20,7 +20,6 @@ class LoginForm extends Component {
     e.preventDefault()
     this.props.onLogin(this.state)
     this.setState({username: '', password: ''})
-    console.log(this.state)
   }
 
   render () {
@@ -33,6 +32,13 @@ class LoginForm extends Component {
           verticalAlign='middle'
         >
           <Grid.Column style={{ maxWidth: 450 }}>
+            {
+              this.props.error ? <Message negative>
+                {this.props.error}
+              </Message> : ''
+
+            }
+
             <Header textAlign='center'>
               Sign in to your account
             </Header>

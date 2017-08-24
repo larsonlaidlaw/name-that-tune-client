@@ -30,6 +30,7 @@ class Tracklist extends React.Component{
       .then(()=>this.props.fetchData())
   }
 
+
   render(){
       let otherVideos = this.props.data && this.props.data.videos.map((video, index)=>{
         return (
@@ -58,7 +59,7 @@ class Tracklist extends React.Component{
     return(
       <div>
         {this.props.data && this.props.data.videos.length > 0 ?
-          <h3>Video List</h3> : ""
+          <h3>{this.props.data.title}</h3> : ""
         }
         <List celled ordered>
           {this.state.editing ? otherVideos : videos }
@@ -66,7 +67,7 @@ class Tracklist extends React.Component{
         {this.props.videoObjects.length > 0
           ? <Button onClick={this.props.savePlaylist}>Update Playlist</Button>
           : <Button onClick={this.editPlaylist}>{ this.state.editing ? 'Done Editing' : 'Edit Playlist' }</Button>
-        }
+        }<Button onClick={this.props.savePlaylist}>Share Playlist</Button>
       </div>
     )
   }

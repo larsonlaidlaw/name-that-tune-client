@@ -28,7 +28,6 @@ class Player extends Component {
   }
 
   componentDidMount(){
-    console.log(this.props)
     this.fetchData()
   }
 
@@ -37,7 +36,6 @@ class Player extends Component {
     fetch(`${BASE_URL}/api/v1/lists/${this.props.match.params.id}`)
       .then(response=>response.json())
       .then(data => {
-
         if (data.status === 404){
           this.setState({
             stackBreak: this.state.stackBreak + 1
@@ -234,7 +232,6 @@ class Player extends Component {
             </Grid.Column>
 
             <Grid.Column width={5} >
-
             </Grid.Column>
           </Grid.Row>
 

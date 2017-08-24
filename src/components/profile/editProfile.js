@@ -48,7 +48,7 @@ const EditProfile = (props) => {
         </Segment>
       </Form>
     }>
-      Stop acting like this is a Facebook or Google Account and just leave your stuff as is.
+      Stop acting like this is Facebook or Google and leave it alone.
     </Popup>
 
   </div>
