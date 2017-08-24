@@ -45,8 +45,6 @@ class Player extends Component {
           }
         }
 
-        console.log(data)
-
         let videoIds = []
         let videoChannels = []
         let videoTitles = []

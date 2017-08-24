@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom'
 class UserList extends React.Component {
 
   render(){
-    console.log(this.props)
     let images = null
     let titles = null
     if (this.props.videoLists.lists) {

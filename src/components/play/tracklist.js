@@ -67,7 +67,7 @@ class Tracklist extends React.Component{
         {this.props.videoObjects.length > 0
           ? <Button onClick={this.props.savePlaylist}>Update Playlist</Button>
           : <Button onClick={this.editPlaylist}>{ this.state.editing ? 'Done Editing' : 'Edit Playlist' }</Button>
-        }<Button onClick={this.props.savePlaylist}>Share Playlist</Button>
+        }
       </div>
     )
   }

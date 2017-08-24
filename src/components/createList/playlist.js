@@ -92,7 +92,6 @@ class Playlist extends Component {
  }
 
   render(){
-    console.log('redirect',this.state.redirect)
     let returnThis = this.returnValue()
 
     return(

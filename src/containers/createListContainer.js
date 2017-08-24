@@ -67,7 +67,6 @@ class CreateListContainer extends Component {
       videoId: obj.id.videoId,
       videoTitle: obj.snippet.title
     })
-    console.log(obj.id.videoId)
   }
 
   addVideoToPlaylist = (video) => {

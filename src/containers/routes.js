@@ -36,7 +36,6 @@ class Routes extends React.Component {
           error: res.error
         })
       } else {
-        console.log("auth adapter", res)
         localStorage.setItem('jwt', res.jwt)
         localStorage.setItem('id', res.id)
         localStorage.setItem('username', res.username)

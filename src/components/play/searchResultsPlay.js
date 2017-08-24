@@ -2,7 +2,6 @@ import React from 'react'
 import { Image, List, Icon } from 'semantic-ui-react'
 
 const SearchResultsPlay = (props) => {
-  console.log('from search results play',props)
   let results = props.searchResults.map((result)=>{
     return(
       <List.Item onClick={()=>props.handleVideoSelection(result)}>
@@ -15,8 +14,7 @@ const SearchResultsPlay = (props) => {
   })
   return(
     <div>
-    <List selection verticalAlign='middle'>{results}</List>
-
+      <List selection verticalAlign='middle'>{results}</List>
     </div>
   )
 }
