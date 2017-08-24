@@ -98,6 +98,34 @@ class CreateListContainer extends Component {
     })
   }
 
+  onReady = (event) => {
+    console.log(`YouTube Player object for videoId: "${this.state.videoId}" has been saved to state.`)
+    this.setState({ player: event.target })
+  }
+
+  onPlayVideo = () => {
+    this.state.player.playVideo()
+    this.setState({
+      playing: true
+    })
+  }
+
+  onPauseVideo = () => {
+    this.state.player.pauseVideo()
+    this.setState({
+      playing: false
+    })
+  }
+
+
+  onStateChange = (event) => {
+
+    if (event.data === 5 && this.state.i !== 0) {
+      this.state.playing && this.onPlayVideo()
+    }
+  }
+
+
   divToRender = () => {
     if (this.state.switch === false){
       return(
@@ -117,12 +145,15 @@ class CreateListContainer extends Component {
               <Grid.Row centered>
                 <Grid.Column width={8} style={{ minWidth: 680, maxWidth: 680 }}  >
                   <Header>{this.state.videoTitle}</Header>
-                    <YouTube videoId={this.state.videoId}/>
+                    <YouTube
+                      videoId={this.state.videoId}
+                      onReady={this.onReady}
+                      onStateChange={this.onStateChange}
+                    />
                       <div className='buttonSearch'>
                         <Button.Group labeled compact>
                           <Button icon='play' content='Play' compact onClick={this.onPlayVideo}/>
                           <Button icon='pause' content='Pause' compact onClick={this.onPauseVideo}/>
-                          <Button icon='step forward' content='Next' compact onClick={this.onNextVideo}/>
                         </Button.Group>
                         <Search
                           handleSearchChange={this.handleSearchChange}
